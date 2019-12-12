@@ -1,6 +1,6 @@
 $(document).ready(function(){
     var game = new Game($(".go-board"), $(".board tbody"));
-
+    
     var adjustSize = adjustSizeGen();
 
     $(window).resize(adjustSize);
@@ -9,42 +9,45 @@ $(document).ready(function(){
     $.mobile.defaultDialogTransition = 'flip';
     $.mobile.defaultPageTransition = 'flip';
     
-    $('#mode-select input[type="radio"]').on('change', function(){
-        gameData.mode=$(this).val();
-    });
+    // $('#mode-select input[type="radio"]').on('change', function(){
+    //     gameData.mode=$(this).val();
+    // });
     
-    $('#color-select input[type="radio"]').on('change', function(){
-        gameData.color=$(this).val();
-    });
+    // $('#color-select input[type="radio"]').on('change', function(){
+    //     gameData.color=$(this).val();
+    // });
     
-    $('#level-select input[type="radio"]').on('change', function(){
-        gameData.level=$(this).val();
-    });
+    // $('#level-select input[type="radio"]').on('change', function(){
+    //     gameData.level=$(this).val();
+    // });
     
-    $('.back-to-game').on('tap',function(){
-        $.mobile.changePage('#game-page');
-    });
+    // $('.back-to-game').on('tap',function(){
+    //     $.mobile.changePage('#game-page');
+    // });
     
     $("#start-game").on('click',function(){
         try{
             game.white.worker.terminate();
             game.black.worker.terminate();
         }catch(e){}
-        if(gameData.mode==='vshuman'){
-            game.mode='hvh';
-            game.init(new HumanPlayer("black"), new HumanPlayer("white"));
-        }else{
-            var color, other;
-            if(gameData.color==='black'){
-                color='black';
-                other='white';
-            }else{
-                color='white';
-                other='black';
-            }
-            game.mode=gameData.level;
-            game.init(new HumanPlayer(color), new AIPlayer(game.mode, other));
-        }
+        game.mode='hvh';
+        game.init(new HumanPlayer("black"), new HumanPlayer("white"));
+
+        // if(gameData.mode==='vshuman'){
+        //     game.mode='hvh';
+        //     game.init(new HumanPlayer("black"), new HumanPlayer("white"));
+        // }else{
+        //     var color, other;
+        //     if(gameData.color==='black'){
+        //         color='black';
+        //         other='white';
+        //     }else{
+        //         color='white';
+        //         other='black';
+        //     }
+        //     game.mode=gameData.level;
+        //     game.init(new HumanPlayer(color), new AIPlayer(game.mode, other));
+        // }
         $.mobile.changePage('#game-page');
         game.start();
         setTimeout(function(){$('.back-to-game').button('enable');},100);
@@ -59,7 +62,7 @@ $(document).ready(function(){
         $.mobile.changePage('#game-won');
     });
     
-    $('#new-game').page();
+    // $('#new-game').page();
     $('#game-won').page();
     gameData.load();
     $('.back-to-game').button('disable');
